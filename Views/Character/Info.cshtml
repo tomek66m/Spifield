@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Spifield - Informacje o postaci";
+}
+
+@model Spifield.Model.Character
+@inject AppDbContext appDbContext
+
+
+<table class="table table-bordered" style="background-color: Highlight;">
+    <tbody>
+        <tr>
+            <td>
+                Awatar
+            </td>
+            <td>
+                Opis postaci
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table table-dark table-bordered">
+    <thead>
+        <tr>
+            <th scope-="col">
+                Typ
+            </th>
+            <th scope="col">
+                Siła Ataku/ Moc Magiczna
+            </th>
+            <th scope="col">
+                Dexterity
+            </th>
+            <th scope="col">
+                Vitality
+            </th>
+            <th scope="col">
+                Agility
+            </th>
+            <th>
+                Obrona
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @*<th scope="row">Rasa</th>
+                @{
+                    var race = appDbContext.Races.FirstOrDefault(r => r.RaceID == Model.Race.RaceID);
+                }
+                <td>@race.BaseAttackDamage</td>
+                <td>@race.BaseDexterity</td>
+                <td>@race.BaseVitality</td>
+                <td>@race.BaseAgility</td>
+                <td>@race.BaseDefence</td>*@
+        </tr>
+        <tr>
+            <th scope="row">Postać</th>
+            <td>@Model.AdditionalAtttackDamage</td>
+            <td>@Model.AdditionalDexterity</td>
+            <td>@Model.AdditionalVitality</td>
+            <td>@Model.AdditionalAgility</td>
+            <td>@Model.AdditionalDefence</td>
+        </tr>
+    </tbody>
+</table>

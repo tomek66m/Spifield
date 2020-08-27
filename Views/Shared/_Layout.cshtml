@@ -1,0 +1,135 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> userManager
+<!DOCTYPE html>
+@inject SignInManager<AppUser> SignInManager
+@inject AppDbContext appDbContext
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/lib/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/content/logo2-bigger.png" rel="stylesheet" />
+    <link href="~/css/basic.css" rel="stylesheet" />
+    <title>Spifield - strona gry WWW</title>
+
+</head>
+
+<body>
+    <!--LOGO-->
+    <a asp-controller="Home" asp-action="Index">
+        <img class="img-fluid" src="~/content/logo2-bigger.png" />
+    </a>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark w-100">
+        <ul class="navbar-nav">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a asp-controller="UserAccount" asp-action="Login" class="nav-link text-light">Logowanie</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="UserAccount" asp-action="Register" class="nav-link text-light">Rejestracja</a>
+                </li>
+            }
+            <li class="nav-item">
+                <a class="nav-link text-light">Ranking</a>
+            </li>
+        </ul>
+        <!--LOG OUT FORM-->
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form asp-controller="UserAccount" asp-action="Logout" method="post" id="logoutForm">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item">
+                        <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link text-light">Wyloguj</a>
+                    </li>
+                </ul>
+            </form>
+        }
+    </nav>
+
+    <!--MAIN CONTENT-->
+    <div class="container-fluid">
+        @if (User.Identity.IsAuthenticated)
+        {
+            var user = await userManager.GetUserAsync(User);
+
+            if (user.IsCharacterCreated)
+            {
+                var character = appDbContext.Characters.FirstOrDefault(c => c.CharacterID == user.AccountCharacterID);
+                <!--LEFT PANEL-->
+                <div class="row">
+                    <div class="col-md-2 my-auto">
+                        <ul class="list-group">
+                            <li class="list-group-item text-center">
+                                Awatar
+                            </li>
+                            <li class="list-group-item">
+                                Nazwa postaci: @character.Name
+                            </li>
+                            <li class="list-group-item">
+                                Rasa: @appDbContext.Races.FirstOrDefault(c => c.RaceID == character.RaceID).Name
+                            </li>
+                            <li class="list-group-item">
+                                Exp: @character.Experience
+                            </li>
+                            <li class="list-group-item">
+                                Level: @character.Level
+                            </li>
+                            <li class="list-group-item">
+                                Ilość Silfr: @character.SilfrQuantity
+                            </li>
+                        </ul>
+                    </div>
+                    <!--CENTER AND RIGHT PANEL with -->
+                    <!-- CENTER PANEL-->
+                    <div class="col-md-8">
+                        @RenderBody()
+                    </div>
+                    <!-- RIGHT PANEL -->
+                    <div class="col-md-2 my-auto">
+                        <ul class="list-group">
+                            <li class="list-group-item text-center">
+                                Pasek nawigacyjny
+                            </li>
+                            <li class="list-group-item text-center">
+                                <a asp-controller="Character" asp-action="Info">Postać</a>
+                            </li>
+                            <li class="list-group-item text-center">
+                                <a asp-controller="Character" asp-action="GetInventory" asp-route-id="@character.CharacterID">Ekwipunek</a>
+                            </li>
+                            <li class="list-group-item text-center">
+                                <a asp-controller="Location" asp-action="LocationList">Lokacje</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <!--LEFT PANEL-->
+                    <div class="col-md-2">
+                        <h3>Brak stworzonej postaci!</h3>
+                    </div>
+                    <!-- CENTER PANEL -->
+                    <div class="col-md-8">
+                        @RenderBody()
+                    </div>
+                    <!--RIGHT PANEL-->
+                    <div class="col-md-2">
+                        <h3>Aby utworzyć postać kliknij poniżej</h3>
+                        <a class="text-light" asp-controller="Character" asp-action="Create"><h3>Stwórz!</h3></a>
+                    </div>
+                </div>
+            }
+        }
+        <div class="col-md-10 offset-1">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/jquery-3.4.1.slim.min.js"></script>
+    <script src="~/lib/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+﻿@model Spifield.ViewModels.LoginVM
+
+<div class="body-content offset-md-4 col-md-4">
+    <h2 class="text-center text-white">Logowanie</h2>
+
+    <form asp-controller="UserAccount" asp-action="Login" method="post" role="form">
+
+        <div asp-validation-summary="All" class="text-danger offset-md-3"></div>
+
+        <div class="form-group">
+            <input asp-for="UserName" class="form-control" placeholder="Twój login" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="Password" class="form-control" placeholder="Twoje hasło" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <div class="offset-md-3 col-md-6">
+                <input type="submit" class="btn btn-success btn-block" value="Zaloguj się" />
+            </div>
+        </div>
+    </form>
+</div>

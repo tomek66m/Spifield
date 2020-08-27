@@ -1,0 +1,148 @@
+﻿@model Spifield.ViewModels.AllCharacterInventoryVM
+@{
+    ViewData["Title"] = "Ekwipunek";
+}
+
+<div class="body-content">
+    <!--ZALOZONE ITEMY-->
+    <div class="row">
+        <table class="table table-dark table-bordered">
+            <thead>
+                <tr>
+                    <th scope-="col">
+                        Nazwa
+                    </th>
+                    <th scope="col">
+                        Rank
+                    </th>
+                    <th scope="col">
+                        Rodzaj
+                    </th>
+                    <th scope="col">
+                        Unikat
+                    </th>
+                    <th scope="col">
+                        Wygląd
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model.wieldedItems)
+                {
+                    <tr>
+                        <td>
+                            @x.Name
+                        </td>
+                        <td>
+                            @x.Rank
+                        </td>
+                        <td>
+                            @x.Type
+                        </td>
+                        <td>
+                            @if (x.IsUnique == true)
+                            {
+                                <p style="color:red">Unikat</p>
+                            }
+                            else
+                            {
+                                <p style="color:aqua">Zwykły</p>
+                            }
+                        </td>
+                        <td>
+                            @x.MiniatureURL
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <!--WSZYSTKIE ITEMY-->
+    <div class="row">
+        <table class="table table-dark table-bordered">
+            <thead>
+                <tr>
+                    <th scope-="col">
+                        Nazwa
+                    </th>
+                    <th scope-="col">
+                        Ilość
+                    </th>
+                    <th scope="col">
+                        Wymagany level
+                    </th>
+                    <th scope="col">
+                        Rank
+                    </th>
+                    <th scope="col">
+                        Rodzaj
+                    </th>
+                    <th scope="col">
+                        Unikat
+                    </th>
+                    <th scope="col">
+                        CenaSklepowa
+                    </th>
+                    <th scope="col">
+                        Wygląd
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model.allItems)
+                {
+                    <tr>
+                        <td>
+
+                            @x.Item.Name
+                        </td>
+                        <td>
+
+                            @x.Quantity
+                        </td>
+                        <td>
+                            @x.Item.RequiredLevel
+                        </td>
+                        <td>
+                            @x.Item.Rank
+                        </td>
+                        <td>
+                            @x.Item.Type
+                        </td>
+                        <td>
+                            @if (x.Item.IsUnique == true)
+                            {
+                                <p style="color:red">Unikat</p>
+                            }
+                            else
+                            {
+                                <p style="color:aqua">Zwykły</p>
+                            }
+                        </td>
+                        <td>
+                            @x.Item.ShopPrice
+                        </td>
+                        <td>
+                            @x.Item.MiniatureURL
+                        </td>
+                        <td>
+                            @{
+                                var id = ViewContext.RouteData.Values["id"];
+                            }
+                            @if (!x.IsWielded)
+                            {
+                                <a asp-controller="Character" asp-action="EquipItem" asp-route-id="@x.Item.ItemID" asp-route-type="@x.Item.Type" asp-route-characterid="@id">
+                                    Załóż przedmiot
+                                </a>
+                            }
+                            else
+                            {
+                                
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

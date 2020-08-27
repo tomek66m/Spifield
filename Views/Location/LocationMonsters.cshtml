@@ -1,0 +1,45 @@
+﻿@model List<Spifield.Model.Monster>
+@{
+    ViewData["Title"] = "Lokacja ...";
+}
+
+
+<table class="table table-dark table-bordered">
+    <thead>
+        <tr>
+            <th scope-="col">
+                Nazwa
+            </th>
+            <th scope="col">
+                Level
+            </th>
+            <th scope="col">
+                Miniatura
+            </th>
+            <th>
+                Walcz
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Level
+                </td>
+                <td>
+                    MINIATURA
+                </td>
+                <td>
+                    <a asp-controller="Fight" asp-action="FightWithMonster" asp-route-id="@item.MonsterID">
+                        WALCZ
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

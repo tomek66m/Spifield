@@ -1,0 +1,30 @@
+﻿@model Spifield.ViewModels.CharacterCreateVM
+@{
+    ViewData["Title"] = "Tworzenie postaci";
+}
+<div class="d-flex col-md-12 text-center justify-content-center align-items-center bg-dark text-light">
+
+    <form asp-controller="Character" asp-action="Create" method="post">
+        <div class="form-group">
+            <label asp-for="Name">Nazwa postaci</label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <input asp-for="Name" type="text" class="form-control" placeholder="Twoja nazwa postaci" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RaceID">Rasa</label>
+            <span asp-validation-for="RaceID" class="text-danger"></span>
+            <!-- CHOSING RACE INPUT-->
+            <select asp-for="RaceID" asp-items="@Model.RacesList">
+                <option>Wybierz jedną</option>
+            </select>
+
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Potwierdź" />
+        </div>
+
+    </form>
+</div>
+

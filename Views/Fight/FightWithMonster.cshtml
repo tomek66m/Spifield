@@ -1,0 +1,79 @@
+﻿@model Spifield.ViewModels.RoundVM
+@{
+    ViewData["Title"] = "FightWithMonster";
+}
+
+
+<div class="row">
+    <table class="table table-dark table-bordered">
+        <thead>
+            <tr>
+                <th scope-="col">
+                    Hit chance Postaci
+                </th>
+                <th scope="col">
+                    Hit chance Potwora
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <th>
+                        @Model.CharacterHitChance
+                    </th>
+                    <th>
+                        @Model.MonsterHitChance
+                    </th>
+                </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="row">
+    <table class="table table-dark table-bordered">
+        <thead>
+            <tr>
+                <th scope-="col">
+                    Numer ruchu
+                </th>
+                <th scope="col">
+                    HP Gracza
+                </th>
+                <th scope="col">
+                    Obrażenia zadanie przez gracza
+                </th>
+                <th scope="col">
+                    HP Potwora
+                </th>
+                <th scope="col">
+                    Obrażenia zadane przez potwora
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.particispantsMoves)
+            {
+                <tr>
+                    <td>@x.moveID</td>
+                    <td>@x.CharacterHP</td>
+                    <td>@x.CharacterDamage</td>
+                    <td>@x.MonsterHP</td>
+                    <td>@x.MonsterDamage</td>
+                </tr>
+            }
+
+            <tr>
+                @if (Model.IsPlayerWon == true)
+                {
+                    <td>Wynik walki: WYGRAŁES</td>
+                }
+
+                else
+                {
+                    <td>Wynik walki: PRZEGRAŁEM</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>
